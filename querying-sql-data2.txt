@@ -1,0 +1,333 @@
+******** SQL QUERYING PRACTICE 2********
+_________________________________________________________________________________________________________
+
+Q. How many zipcodes are represented in this dataset?
+
+  //Create Database
+  createdb restaurant_data
+
+  //Create Table in Database
+  CREATE TABLE restaurant_performance(
+  restaurant_name VARCHAR,
+  zip_code VARCHAR,
+  inspection_date VARCHAR,
+  score numeric,
+  address TEXT,
+  facility_id VARCHAR,
+  process_desc VARCHAR
+  );
+
+  COPY restaurant_performance FROM '/home/vagrant/code/mks/restaurant_inspection_scores.csv' DELIMITER ',' CSV HEADER;
+
+  SELECT COUNT(DISTINCT zip_code) FROM restaurant_performance;
+
+  ANSWER: 57
+
+___________________________________________________________________________________________________________
+
+Q. What is the breakdown of inspection count by zip code?
+
+
+  SELECT zip_code, COUNT(*) FROM restaurant_performance GROUP BY zip_code ORDER BY count desc;
+
+  ANSWER:
+
+   zip_code | count
+  ----------+-------
+   78704    |  1453
+   78701    |  1235
+   78745    |  1186
+   78753    |  1015
+   78758    |   920
+   78705    |   875
+   78702    |   856
+   78759    |   765
+   78748    |   655
+   78757    |   650
+   78741    |   649
+   78749    |   635
+   78746    |   620
+   78744    |   579
+   78723    |   520
+   78703    |   461
+   78752    |   456
+   78751    |   438
+   78738    |   406
+   78750    |   398
+   78731    |   354
+   78729    |   347
+   78734    |   327
+   78756    |   315
+   78660    |   313
+   78735    |   277
+   78727    |   267
+   78726    |   247
+   78617    |   230
+   78653    |   228
+   78717    |   226
+   78728    |   225
+   78732    |   209
+   78754    |   206
+   78722    |   171
+   78724    |   157
+   78613    |   153
+   78719    |   139
+   78721    |   122
+   78669    |    95
+   78736    |    93
+   78730    |    64
+   78725    |    61
+   78737    |    60
+   78747    |    60
+   78733    |    57
+   78652    |    49
+
+
+
+___________________________________________________________________________________________________________
+
+Q. Which zipcode had the highest average score?
+
+
+ SELECT zip_code, AVG(score) FROM restaurant_performance GROUP BY zip_code ORDER BY avg desc;
+
+ ANSWER: 78621
+
+
+ RESULT:
+
+  zip_code |         avg
+----------+---------------------
+ 78621    | 96.8333333333333333
+ 78743    | 95.8000000000000000
+ 78641    | 95.6785714285714286
+ 78652    | 95.6326530612244898
+ 78654    | 95.5000000000000000
+ 78742    | 95.2666666666666667
+ 78739    | 95.1458333333333333
+ 78610    | 95.0000000000000000
+ 78725    | 94.8524590163934426
+ 78737    | 94.8000000000000000
+ 78726    | 94.6801619433198381
+ 78732    | 94.4784688995215311
+ 78749    | 93.7543307086614173
+ 78727    | 93.5767790262172285
+ 78756    | 93.1396825396825397
+ 78748    | 93.1267175572519084
+ 78724    | 92.9235668789808917
+ 78669    | 92.9157894736842105
+ 78731    | 92.8446327683615819
+ 78751    | 92.8378995433789954
+ 78754    | 92.8009708737864078
+ 78750    | 92.7613065326633166
+ 78730    | 92.7343750000000000
+ 78617    | 92.6000000000000000
+ 78757    | 92.5769230769230769
+ 78746    | 92.5693548387096774
+ 78759    | 92.5686274509803922
+ 78705    | 92.5634285714285714
+ 78735    | 92.4404332129963899
+ 78613    | 92.3725490196078431
+ 78738    | 92.3596059113300493
+ 78719    | 92.3381294964028777
+ 78733    | 92.2631578947368421
+ 78717    | 92.2345132743362832
+ 78653    | 92.0438596491228070
+ 78721    | 91.9426229508196721
+ 78704    | 91.7563661390227116
+ 78728    | 91.7555555555555556
+ 78734    | 91.5718654434250765
+ 78723    | 91.4288461538461538
+ 78736    | 91.3440860215053763
+ 78722    | 91.3333333333333333
+ 78729    | 91.1988472622478386
+ 78703    | 91.0607375271149675
+ 78747    | 90.7833333333333333
+ 78702    | 90.7605140186915888
+ 78758    | 90.7500000000000000
+
+___________________________________________________________________________________________________________
+
+Q. What is the lowest possible score based on this dataset?
+
+
+SELECT zip_code, AVG(score) FROM restaurant_performance GROUP BY zip_code ORDER BY avg asc;
+
+ANSWER: 78615
+
+RESULT:
+ zip_code |         avg
+----------+---------------------
+ 78615    | 79.2000000000000000
+ 78612    | 85.2500000000000000
+ 78701    | 87.9303643724696356
+ 78620    | 89.0909090909090909
+ 78744    | 89.2987910189982729
+ 78741    | 89.4175654853620955
+ 78752    | 89.9276315789473684
+ 78745    | 90.2377740303541315
+ 78660    | 90.3610223642172524
+ 78753    | 90.6581280788177340
+ 78758    | 90.7500000000000000
+ 78702    | 90.7605140186915888
+ 78747    | 90.7833333333333333
+ 78703    | 91.0607375271149675
+ 78729    | 91.1988472622478386
+ 78722    | 91.3333333333333333
+ 78736    | 91.3440860215053763
+ 78723    | 91.4288461538461538
+ 78734    | 91.5718654434250765
+ 78728    | 91.7555555555555556
+ 78704    | 91.7563661390227116
+ 78721    | 91.9426229508196721
+ 78653    | 92.0438596491228070
+ 78717    | 92.2345132743362832
+ 78733    | 92.2631578947368421
+ 78719    | 92.3381294964028777
+ 78738    | 92.3596059113300493
+ 78613    | 92.3725490196078431
+ 78735    | 92.4404332129963899
+ 78705    | 92.5634285714285714
+ 78759    | 92.5686274509803922
+ 78746    | 92.5693548387096774
+ 78757    | 92.5769230769230769
+ 78617    | 92.6000000000000000
+ 78730    | 92.7343750000000000
+ 78750    | 92.7613065326633166
+ 78754    | 92.8009708737864078
+ 78751    | 92.8378995433789954
+ 78731    | 92.8446327683615819
+ 78669    | 92.9157894736842105
+ 78724    | 92.9235668789808917
+ 78748    | 93.1267175572519084
+ 78756    | 93.1396825396825397
+ 78727    | 93.5767790262172285
+ 78749    | 93.7543307086614173
+ 78732    | 94.4784688995215311
+ 78726    | 94.6801619433198381
+
+___________________________________________________________________________________________________________
+
+Q.Which establishments scored the lowest?
+
+ SELECT restaurant_name, score FROM restaurant_performance ORDER BY score asc;
+
+ ANSWER: Fran's Hamburgers, Los Comales Taqueria, Villa Mexico Restaurant
+
+ RESULT:
+
+                    restaurant_name                    | score
+-------------------------------------------------------+-------
+ Fran's Hamburgers                                     |    45
+ Los Comales Taqueria                                  |    48
+ Villa Mexico Restaurant                               |    50
+ Janitzio Mexican Restaurant                           |    50
+ La Fuentes Restaurant                                 |    50
+ Chinatown Restaurant                                  |    51
+ R.C. Fowlers Bar & Grill                              |    52
+ Fujian Grand China Buffet                             |    52
+ Taco Cabana #123                                      |    53
+ Morelia Mexican Grill                                 |    53
+ Chuy Panaderia                                        |    53
+ Stop 71                                               |    54
+ Down In Texas Saloon                                  |    56
+ Veggie Heaven                                         |    56
+ Geisha Sushi House and Grill                          |    56
+ TC Noodle House                                       |    56
+ Korea House                                           |    57
+ Villa Mexico Restaurant                               |    57
+ La Catedral Del Marisco #2                            |    57
+ Sap's Fine Thai Cuisine                               |    57
+ Buffet Palace                                         |    57
+ Mi Pueblo Meat Market                                 |    57
+ China Star                                            |    57
+ Buffet King                                           |    57
+ Holiday Inn Austin Town Lake Pecan Tree Restaurant    |    57
+ JD's Market                                           |    58
+ Jalisco's Restaurant and Bar                          |    58
+ Mikado Ryotei                                         |    58
+ Frank                                                 |    58
+ Central Market: Prepared Foods                        |    58
+ Szechuan House                                        |    59
+ Maggie Mae's                                          |    59
+ Restaurant El Rey                                     |    59
+ Firehouse Lounge                                      |    59
+ Taqueria La Tapatia                                   |    59
+ Heritage of Gaines Ranch-Main Kit                     |    59
+ Tapasitas                                             |    59
+ Roland Soul Food & Fish Or Us                         |    59
+ Senor Buddys                                          |    59
+ El Meson                                              |    60
+ Ed's Barbecue                                         |    60
+ Omni Austin                                           |    60
+ Freddy's Frozen Custard                               |    60
+ Cisco's Bakery & Coffee Shop                          |    60
+ Hunan Lion Restaurant                                 |    60
+ Umi Sushi Bar & Grill                                 |    61
+ Bamboo Garden                                         |    61
+
+___________________________________________________________________________________________________________
+
+Q. Which establishments received the most visits from the inspector?
+
+
+SELECT COUNT(facility_id), restaurant_name FROM restaurant_performance GROUP BY restaurant_name ORDER BY count desc;
+
+
+ANSWER:
+  Subway, 161 visits
+  ThunderCloud Subs, 81 visits
+  Pizza Hut, 64 visits
+  Sonic Drive In, 64 visits
+
+ RESULT:
+
+ count |                    restaurant_name
+-------+-------------------------------------------------------
+   161 | Subway
+    81 | Thundercloud Subs
+    64 | Pizza Hut
+    64 | Sonic Drive In
+    63 | McDonald's
+    45 | Amy's Ice Cream
+    41 | 7-Eleven
+    36 | Tokyo Gardens Catering
+    36 | Torchy's Tacos
+    36 | Sonic
+    32 | Dairy Queen
+    31 | Stepping Stone School
+    31 | Domino's Pizza
+    30 | My Fit Foods
+    29 | Sunrise Mini Mart
+    28 | Burger King
+    26 | Chick-Fil-A
+    26 | Tino's Greek Cafe
+    26 | Austin's Pizza
+    26 | P. Terry's Burger Stand
+    24 | Short Stop
+    23 | La Michoacana Meat Market
+    23 | Coffee Bean & Tea Leaf, The
+    22 | Baskin Robbins
+    22 | IHOP
+    22 | Taco Bell
+    21 | Taco Shack
+    20 | Whataburger
+    20 | Which Wich?
+    20 | Children's Courtyard, The
+    19 | Jason's Deli
+    19 | Walgreens
+    18 | Waterloo Ice House
+    17 | Texican Cafe
+    17 | Bread Basket
+    17 | Dominos Pizza
+    17 | Comfort Suites
+    17 | Mr. Gatti's
+    17 | Lone Star Kolaches
+    17 | Freebirds
+    17 | Subway Sandwiches
+    16 | Panera Bread
+    16 | Little Caesar's Pizza
+    16 | Royal Blue Grocery
+    16 | Thistle Cafe
+    16 | Edible Arrangements
+    15 | Long John Silver's

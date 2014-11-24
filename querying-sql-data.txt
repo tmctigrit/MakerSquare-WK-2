@@ -1,0 +1,102 @@
+******** SQL QUERYING PRACTICE ********
+_________________________________________________________________________________________________________
+
+Q. How many different airlines are represented in this dataset?
+
+//Create Database
+  createdb airline_data
+
+//Create Table in Database
+
+  CREATE TABLE airline_performance(
+  month integer,
+  airline_id VARCHAR,
+  carrier VARCHAR,
+  origin_city_name VARCHAR,
+  dest_city_name VARCHAR,
+  dep_delay_new numeric,
+  arr_delay_new numeric
+  );
+
+//Copy Data from CSV file to Table
+  COPY airline_performance FROM '/home/vagrant/code/mks/on_time_performance.csv' DELIMITER ',' CSV HEADER;
+
+//Count the number of different airlines represented in dataset
+  SELECT COUNT(DISTINCT carrier) FROM airline_performance;
+
+ANSWER: 14
+
+_________________________________________________________________________________________________________
+
+Q. Which airline had the largest quantity of delayed flights? Which had the fewest?
+
+
+  SELECT carrier, COUNT(*) FROM airline_performance WHERE dep_delay_new > 0 GROUP BY carrier ORDER BY count desc;
+
+
+  ANSWER:
+  Airline with largest quantity of delayed flights: WN, 57,611
+  Airline with fewest quantity delayed flights: HA, 1189
+
+
+
+_________________________________________________________________________________________________________
+
+Q. Which departing airport had the highest number of delayed flights? Which had the fewest?
+
+
+
+  SELECT origin_city_name, COUNT(*) FROM airline_performance WHERE dep_delay_new > 0 GROUP BY origin_city_name ORDER BY count desc;
+
+
+  ANSWER:
+  Departing Airport with highest number of delayed flights: Chicago, IL - 16,089
+  Departing Airport with the fewest number of delayed flights: Albuquerque, NM - 860
+
+
+_________________________________________________________________________________________________________
+
+Q. Which arriving airport had the highest number of delayed flights? Which had the fewest?
+
+
+  SELECT dest_city_name, COUNT(*) FROM airline_performance WHERE arr_delay_new > 0 GROUP BY dest_city_name ORDER BY count desc;
+
+  ANSWER:
+  Arriving Airport with highest number of delayed flights: Chicago, IL - 13,076
+  Arriving Airport with the fewest number of delayed flights: Albuquerque, NM - 1,020
+
+
+_________________________________________________________________________________________________________
+
+Q. What was the average number of minutes late across all airlines?
+
+
+  SELECT AVG(dep_delay_new) as DelayAverage FROM airline_performance;
+
+  ANSWER: 18.382 minutes
+
+
+_________________________________________________________________________________________________________
+
+Q. What was the average number of minutes late for each airline?
+
+  SELECT carrier, AVG(dep_delay_new) FROM airline_performance GROUP BY carrier ORDER BY avg desc;
+
+  ---------+---------------------
+   B6      | 29.5412448132780083
+   EV      | 24.9154072462015879
+   WN      | 23.1696515643464393
+   F9      | 22.4799221652220060
+   MQ      | 20.1350931677018634
+   DL      | 19.3734484234555571
+   UA      | 18.4275430192415768
+   FL      | 15.7939744025370937
+   AA      | 13.7281309860439661
+   OO      | 13.0420040063433770
+   VX      |  9.4082491582491582
+   US      |  9.2902461419981636
+   AS      |  6.0989969827937699
+   HA      |  2.8356869911945506
+
+
+
