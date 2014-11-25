@@ -1,0 +1,59 @@
+Q. Write and run a query to select all employees.
+
+ANSWER:
+  SELECT * FROM employees;
+
+RESULT:
+   id |  name   |          email          | salary
+  ----+---------+-------------------------+--------
+    1 | nick    | nick@makersquare.com    |      5
+    2 | patrick | patrick@makersquare.com |      5
+    3 | gilbert | gilbert@makersquare.com |     10
+    4 | flip    | flip@makersquare.com    |    100
+    5 | way     | way@makersquare.com     |     10
+
+_________________________________________________________________________________________________
+
+Q. Write and run a query to select all employees that have a salary above $5.
+
+ANSWER:
+  SELECT name, salary FROM employees WHERE salary > 5 ORDER BY salary desc;
+
+RESULT:
+    name   | salary
+  ---------+--------
+   flip    |    100
+   gilbert |     10
+   way     |     10
+
+_________________________________________________________________________________________________
+
+Q. Write and run a query to select all projects.
+
+ANSWER:
+  SELECT * FROM projects;
+
+RESULT:
+   id |      description      | priority
+  ----+-----------------------+----------
+    1 | Write Algorithms Book | normal
+    2 | Build Recruit App     | urgent
+    3 | Rewrite Learn App     | normal
+    4 | Company Party         | low
+    5 | Curriculum Review     | urgent
+
+_________________________________________________________________________________________________
+
+Q. Write and run a query to select all projects with an urgent priority.
+
+ANSWER:
+  SELECT description, priority FROM projects WHERE priority = 'urgent';
+
+RESULT:
+      description    | priority
+  -------------------+----------
+   Build Recruit App | urgent
+   Curriculum Review | urgent
+
+
+
